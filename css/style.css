@@ -91,6 +91,10 @@ nav p.name {
   left: 0;
 }
 
+.hero .subtitle {
+  width: 60%;
+}
+
 .hero .mouse {
   transform: scale(50%);
 }
@@ -113,6 +117,7 @@ nav p.name {
   width: 80%;
   background-color: var(--post-color);
   padding: 20px;
+  border-radius: 10px;
 }
 
 .cards .card .title {
@@ -140,7 +145,7 @@ nav p.name {
 .hero-featured {
   position: relative;
   width: 100%;
-  height: 60%;
+  height: 80%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -219,6 +224,9 @@ nav p.name {
   .cards .card .title {
     font-size: 25px;
     font-weight: 800;
+  }
+  .hero-featured {
+    height: 60%;
   }
   .hero-featured .subtitle {
     width: 50%;
