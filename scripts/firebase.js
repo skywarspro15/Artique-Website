@@ -7,15 +7,14 @@ import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.7.1/firebase
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyDCmZK1NfPE74HWfHVyZEL-SsHWGH-g7bQ",
-  authDomain: "melodies-of-the-heart.firebaseapp.com",
-  projectId: "melodies-of-the-heart",
-  storageBucket: "melodies-of-the-heart.appspot.com",
-  messagingSenderId: "257177450914",
-  appId: "1:257177450914:web:9d5299a527deae8ae8dafb",
-  measurementId: "G-4KV4KX2TN9",
+  apiKey: "AIzaSyC6qAWVMtfFpmuhr2GY0rrjN2LYMbmBoJo",
+  authDomain: "character-interaction-engine.firebaseapp.com",
+  projectId: "character-interaction-engine",
+  storageBucket: "character-interaction-engine.appspot.com",
+  messagingSenderId: "758446330757",
+  appId: "1:758446330757:web:403990dd02e63b251eaaec",
+  measurementId: "G-D7ZXR0P213",
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
