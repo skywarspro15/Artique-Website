@@ -1,3 +1,5 @@
+// Character Chat frontend
+
 const userQuestions = [
   "How's everyone doing today?",
   "Miku, what's your favorite thing about music?",

@@ -1,3 +1,5 @@
+// UI module
+
 const body = document.querySelector("html");
 
 function themeToggle() {
@@ -14,3 +16,11 @@ if (localStorage.getItem("theme") == "dark") {
     body.classList.toggle("dark-mode");
   }
 }
+
+window.addEventListener("storage", () => {
+  if (localStorage.getItem("theme") == "dark") {
+    if (!body.classList.contains("dark-mode")) {
+      body.classList.toggle("dark-mode");
+    }
+  }
+});
