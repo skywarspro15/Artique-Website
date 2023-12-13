@@ -40,6 +40,7 @@ body {
   background-color: var(--bg-color);
   color: var(--fg-color);
   font-family: Satoshi-Variable, "Segoe UI", "Helvetica", sans-serif;
+  scroll-behavior: smooth;
 }
 
 *:before,
@@ -109,6 +110,7 @@ nav p.name {
   height: 90%;
   top: 0;
   left: 0;
+  animation: enter 1s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
 .hero .subtitle {
@@ -165,6 +167,18 @@ button {
   color: var(--button-fore);
   text-decoration: none;
   border-radius: 5px;
+}
+
+.scroll {
+  opacity: 0;
+  transform: translateY(100px);
+  transition: all 1s cubic-bezier(0.19, 1, 0.22, 1);
+  transition-delay: 0.4s;
+}
+
+.scroll-animation {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .hero-featured {
@@ -289,6 +303,11 @@ input::placeholder {
   font-size: 20px;
 }
 
+.name,
+.bubble {
+  animation: enter-chat 1s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
 .ld-hero {
   top: 0;
   left: 0;
@@ -299,6 +318,7 @@ input::placeholder {
   justify-content: center;
   align-items: center;
   background-color: var(--post-color);
+  text-align: center;
 }
 
 @keyframes wheel {
@@ -349,6 +369,28 @@ input::placeholder {
   }
   .hero-featured .subtitle {
     width: 50%;
+  }
+}
+
+@keyframes enter {
+  0% {
+    transform: translateY(300px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes enter-chat {
+  0% {
+    transform: translateY(10px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
   }
 }
 

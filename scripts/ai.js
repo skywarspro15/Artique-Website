@@ -18,7 +18,6 @@ const userQuestions = [
   "Greetings Kame! Any particular theme you enjoy exploring in your compositions?",
   "Miku, what's the most heartwarming fan interaction you've had?",
   "Hey Kame! What role does emotion play in your creative process?",
-  "Miku, any upcoming projects or performances we should know about?",
   "Kame, what's your favorite part about being a musician?",
   "Hey Miku! Any advice for someone looking to pursue a career in music?",
 ];
@@ -144,7 +143,7 @@ let characters = [
   },
   {
     name: "Hatsune Miku",
-    location: "At home",
+    location: "At the studio",
     basePrompt:
       "a virtual singer, beloved by many fans, who likes leeks a lot.",
     personalities: {
