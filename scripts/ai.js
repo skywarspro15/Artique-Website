@@ -23,6 +23,8 @@ const userQuestions = [
   "Shizuka, what's the most heartwarming fan interaction you've had?",
   "Shizuka, any upcoming projects or performances we should know about?",
   "Hey Shizuka! Any advice for someone looking to pursue a career in music?",
+  "Miku, what would Len do if bananas were suddenly banned by the government?",
+  "Miku, why does Gumi like carrots?",
 ];
 
 let characters = [
@@ -213,7 +215,7 @@ let msgInput = document.getElementById("msgInput");
 let sendButton = document.querySelector(".send");
 let chats = document.querySelector(".chats");
 
-let socket = io("https://characterinteractionmodel.skywarspro15.repl.co/");
+let socket = io("https://olive.nxw.pw:6969/");
 let indicator;
 
 function createMessage(name, content, you = false) {
@@ -266,7 +268,10 @@ function sendMessage() {
 socket.on("connect", () => {
   createMessage(
     "System",
-    "You're now connected! Don't know where to start? Try: " + placeholder
+    "You're now connected! Don't know where to start? Try asking " +
+      '"' +
+      placeholder +
+      '"'
   );
 });
 
