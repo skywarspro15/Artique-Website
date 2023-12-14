@@ -113,12 +113,66 @@ nav p.name {
   animation: enter 1s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
+.hero .hero-container {
+  width: 80%;
+  height: 55%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero .hero-container .section {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.hero .hero-container .section.left {
+  text-align: center;
+}
+
+.hero .hero-container .section.left .title {
+  text-align: center;
+  width: 100%;
+}
+.hero .hero-container .section.left .subtitle {
+  text-align: center;
+  width: 100%;
+}
+
+.hero .hero-container .section.right {
+  text-align: right;
+  display: none;
+}
+
+iframe.demo {
+  display: none;
+}
+
+.hero .title {
+  width: 60%;
+  align-self: flex-start;
+  text-align: left;
+}
+
 .hero .subtitle {
   width: 60%;
+  align-self: flex-start;
+  text-align: left;
+}
+
+.hero .scrollDown {
+  align-self: center;
 }
 
 .hero .mouse {
   transform: scale(50%);
+  align-self: center;
 }
 
 .section-title {
@@ -318,7 +372,14 @@ input::placeholder {
   justify-content: center;
   align-items: center;
   background-color: var(--post-color);
-  text-align: center;
+}
+
+.ld-hero-container {
+  width: 90%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 @keyframes wheel {
@@ -337,7 +398,84 @@ input::placeholder {
 
 @media only screen and (min-width: 768px) {
   .hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
     height: 90%;
+    top: 0;
+    left: 0;
+    animation: enter 1s cubic-bezier(0.19, 1, 0.22, 1);
+  }
+
+  .hero .hero-container {
+    width: 100%;
+    height: 50%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hero .hero-container .section {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 45%;
+    justify-content: center;
+  }
+
+  .hero .hero-container .section.left {
+    text-align: left;
+  }
+
+  .hero .hero-container .section.right {
+    text-align: right;
+    display: inherit;
+  }
+
+  iframe.demo {
+    display: inherit;
+    width: 100%;
+    height: 100%;
+    box-shadow: 0px 2px 2px rgba(3, 7, 18, 0.01),
+      0px 7px 6px rgba(3, 7, 18, 0.01), 0px 17px 14px rgba(3, 7, 18, 0.02),
+      0px 30px 24px rgba(3, 7, 18, 0.03), 0px 46px 38px rgba(3, 7, 18, 0.04),
+      0px 67px 54px rgba(3, 7, 18, 0.04), 0px 91px 74px rgba(3, 7, 18, 0.05);
+    border-radius: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  .hero .title {
+    width: 60%;
+    align-self: flex-start;
+    text-align: left;
+  }
+
+  .hero .subtitle {
+    width: 60%;
+    align-self: flex-start;
+    text-align: left;
+  }
+
+  .hero .hero-container .section.left .title {
+    text-align: left;
+    width: 100%;
+  }
+  .hero .hero-container .section.left .subtitle {
+    text-align: left;
+    width: 100%;
+  }
+
+  .hero .scrollDown {
+    align-self: center;
+  }
+
+  .hero .mouse {
+    transform: scale(50%);
+    align-self: center;
   }
   nav {
     display: flex;
