@@ -277,6 +277,60 @@ button {
   max-width: 80%;
 }
 
+footer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--post-footer);
+  height: 10%;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-container {
+  width: 90%;
+  display: flex;
+}
+
+footer .logo {
+  width: 20%;
+}
+
+footer .footer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 50%;
+}
+
+.footer.left {
+  justify-content: flex-start;
+  gap: 10px;
+}
+
+.footer.right {
+  justify-content: flex-end;
+}
+
+.footer .name {
+  font-weight: 600;
+}
+
+a.social {
+  display: flex;
+  justify-items: center;
+  align-items: center;
+  width: 20%;
+}
+
+.footer a.social img {
+  width: 100%;
+  align-self: flex-end;
+  margin: 0;
+  padding: 0;
+}
+
 .chatContainer {
   top: 0;
   left: 0;
@@ -507,6 +561,59 @@ input::placeholder {
   }
   .hero-featured .subtitle {
     width: 50%;
+  }
+  footer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--post-footer);
+    height: 10%;
+    padding: 0;
+    margin: 0;
+  }
+
+  .footer-container {
+    width: 90%;
+    display: flex;
+  }
+
+  footer .logo {
+    width: 8%;
+  }
+
+  footer .footer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 50%;
+  }
+
+  .footer.left {
+    justify-content: flex-start;
+    gap: 10px;
+  }
+
+  .footer.right {
+    justify-content: flex-end;
+  }
+
+  .footer .name {
+    font-weight: 600;
+  }
+
+  a.social {
+    display: flex;
+    justify-items: center;
+    align-items: center;
+    width: 8%;
+  }
+
+  .footer a.social img {
+    width: 100%;
+    align-self: flex-end;
+    margin: 0;
+    padding: 0;
   }
 }
 
