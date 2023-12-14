@@ -20,6 +20,9 @@ const userQuestions = [
   "Hey Kame! What role does emotion play in your creative process?",
   "Kame, what's your favorite part about being a musician?",
   "Hey Miku! Any advice for someone looking to pursue a career in music?",
+  "Shizuka, what's the most heartwarming fan interaction you've had?",
+  "Shizuka, any upcoming projects or performances we should know about?",
+  "Hey Shizuka! Any advice for someone looking to pursue a career in music?",
 ];
 
 let characters = [
