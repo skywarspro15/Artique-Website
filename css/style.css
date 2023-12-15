@@ -79,6 +79,11 @@ nav p.name {
   font-weight: 600;
 }
 
+nav .button {
+  align-self: flex-end;
+  margin: auto;
+}
+
 .mouse {
   width: 50px;
   height: 90px;
@@ -175,6 +180,17 @@ iframe.demo {
   align-self: center;
 }
 
+.highlight {
+  background: #00c9ac;
+  background: -webkit-linear-gradient(to right, #00c9ac 0%, #00c95b 100%);
+  background: -moz-linear-gradient(to right, #00c9ac 0%, #00c95b 100%);
+  background: linear-gradient(to right, #00c9ac 0%, #00c95b 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradient 5s ease infinite;
+}
+
 .section-title {
   padding-bottom: 35px;
   text-align: center;
@@ -221,6 +237,10 @@ button {
   color: var(--button-fore);
   text-decoration: none;
   border-radius: 5px;
+}
+
+.button:hover {
+  cursor: pointer;
 }
 
 .scroll {
@@ -277,6 +297,17 @@ button {
   max-width: 80%;
 }
 
+.tooltip {
+  position: fixed;
+  padding: 15px;
+  background-color: var(--bg-color);
+}
+
+.tooltip-title {
+  font-weight: bold;
+  font-size: 18px;
+}
+
 footer {
   display: flex;
   flex-direction: row;
@@ -329,6 +360,7 @@ a.social {
   align-self: flex-end;
   margin: 0;
   padding: 0;
+  pointer-events: none;
 }
 
 .chatContainer {
@@ -416,7 +448,7 @@ input::placeholder {
   animation: enter-chat 1s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
-.ld-hero {
+.ga-hero {
   top: 0;
   left: 0;
   width: 100%;
@@ -428,7 +460,7 @@ input::placeholder {
   background-color: var(--post-color);
 }
 
-.ld-hero-container {
+.ga-hero-container {
   width: 90%;
   height: 100%;
   display: flex;
@@ -550,7 +582,7 @@ input::placeholder {
     flex-direction: row;
   }
   .cards .card {
-    width: 25%;
+    width: 30%;
   }
   .cards .card .title {
     font-size: 25px;
@@ -614,6 +646,18 @@ input::placeholder {
     align-self: flex-end;
     margin: 0;
     padding: 0;
+  }
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
   }
 }
 

@@ -12,6 +12,10 @@
     <meta property="og:type" content="website" />
     <meta property="og:image" content="/images/banner.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/tippy.js@6/animations/shift-away.css"
+    />
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/satoshi.css" />
     <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
@@ -21,6 +25,9 @@
     <nav>
       <img src="images/logo.png" alt="ARTIQUE logo" class="logo" />
       <p class="name">ARTIQUE Studios</p>
+      <div class="buttons">
+        <button class="button" onclick="themeToggle()">Toggle theme</button>
+      </div>
     </nav>
     <div class="hero">
       <div class="hero-container">
@@ -33,7 +40,7 @@
         <div class="section right">
           <iframe
             class="demo"
-            src="services/chat.html"
+            src="services/chat-widget.html"
             frameborder="0"
           ></iframe>
         </div>
@@ -55,11 +62,11 @@
         </div>
       </div>
       <div class="card">
-        <p class="title">LoreDROP</p>
-        <p class="subtitle">Create, share, and read stories in real time.</p>
+        <p class="title">Featured Art</p>
+        <p class="subtitle">View lovely art from the APEC Schools community!</p>
         <div class="buttons">
-          <a href="services/loredrop.html" class="button" target="_blank"
-            >Write stories now</a
+          <a href="services/gallery.html" class="button" target="_blank"
+            >View featured drawings</a
           >
         </div>
       </div>
@@ -83,17 +90,22 @@
         </p>
         <br />
         <div class="buttons">
-          <a href="" class="button">Subscribe to our channel</a>
+          <a
+            href="https://www.youtube.com/@ArtiqueCreates"
+            target="_blank"
+            class="button"
+            >Subscribe to our channel</a
+          >
         </div>
       </div>
     </div>
     <br /><br />
-
     <h1 class="section-title scroll">Our manifesto</h1>
     <div class="manifesto-container scroll">
       <p class="manifesto">
-        At Artique, we live by 'Creativity Beyond Imagination'. Our mission is
-        to touch hearts, through imaginative experiences. <br />
+        At Artique, we live by
+        <span class="highlight">'Creativity Beyond Imagination'</span>. Our
+        mission is to touch hearts, through imaginative experiences. <br />
         Stories transcend narration; they unfold as vibrant, lived encounters.
         <br />
         <br />
@@ -118,12 +130,19 @@
             href="https://github.com/skywarspro15/Artique-Website"
             target="_blank"
             class="social"
+            id="viewGithub"
           >
-            <img src="images/github-mark.svg" alt="Website source code"
+            <img
+              class="github"
+              src="images/github-mark-light.svg"
+              alt="Website
+            source code"
           /></a>
         </div>
       </div>
     </footer>
   </body>
+  <script src="scripts/popper.min.js"></script>
+  <script src="scripts/tippy-bundle.umd.min.js"></script>
   <script src="scripts/interactions.js"></script>
 </html>
