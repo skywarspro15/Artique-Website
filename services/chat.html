@@ -6,6 +6,13 @@
     <link rel="stylesheet" href="../css/style.css" />
     <link rel="stylesheet" href="../css/satoshi.css" />
     <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link
       rel="shortcut icon"
       href="../images/favicon.ico"
       type="image/x-icon"
@@ -13,72 +20,92 @@
     <title>Character Engine Demo</title>
   </head>
   <body>
-    <div class="chatContainer">
-      <div class="chats">
-        <div class="welcomeMessage">
-          <h1>AI Character Engine Alpha</h1>
-          <p>
-            Welcome to the alpha release of our AI Character Engine Demo for
-            "Melodies of the Heart"! Immerse yourself in a sneak peek of the
-            interactive character experience that awaits in our upcoming game.
-          </p>
-          <br />
-          <p><strong>What To Expect:</strong></p>
-          <br />
-          <strong>Meet the characters</strong>
-          <p>
-            Engage in dynamic conversations with two characters from "Melodies
-            of the Heart" — Kajiwara Kame and Kishi Shizuka, and a supporting
-            Vocaloid character — Hatsune Miku. Each character has a dumbed down
-            prompt, preserving the essence of their personalities without
-            revealing spoilers.
-          </p>
-          <br />
-          <strong>Converse with emotion</strong>
-          <p>
-            Chat freely with Kame, Shizuka and Miku by simply addressing them.
-            Witness their emotions unfold in real-time as they respond to your
-            words, showcasing a glimpse of the emotional depth our AI Character
-            Engine, powered by ChatGPT, brings to interactive storytelling.
-          </p>
-          <br />
-          <p><strong>API coming soon!</strong></p>
-          <p>
-            This demo is a preview of the upcoming API release. Experience the
-            seamless integration of our Character Engine and get a taste of the
-            possibilities for your own projects.
-          </p>
-          <br />
-          <p><strong>Disclaimer</strong></p>
-          <p>
-            Please note that this demo is in its alpha release stage. While we
-            strive for a smooth experience, you may encounter it sometimes
-            having an identity crisis, straight up refusing to answer, and other
-            unexpected behavior. Your valuable feedback will aid us in refining
-            and enhancing the engine.
-          </p>
-          <br />
-          <p><strong>Conversations are NOT private</strong></p>
-          <p>
-            As this is a demo, and is on an alpha stage, we'd like to gain as
-            much insight as possible when it comes to troubleshooting problems.
-            In this case, your conversation with Kame, Shizuka, or Miku wouldn't
-            be private, so please refrain from giving out personal information.
-          </p>
+    <div class="mainContainer">
+      <div class="sidebar hidden">
+        <div class="conversations">
+          <div class="loader">
+            <div class="lds-ellipsis">
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+          </div>
+        </div>
+        <div class="options">
+          <a href="" class="menu-item">Add characters</a>
+          <a href="javascript:themeToggle()" class="menu-item">Toggle theme</a>
         </div>
       </div>
-      <div class="inputs">
-        <input
-          type="text"
-          name="Message input"
-          id="msgInput"
-          placeholder="Message..."
-          autocomplete="off"
-        />
-        <button class="button send">Send</button>
+      <div class="chatContainer main sidebarHidden">
+        <a href="javascript:sidebarToggle()" class="sidebarToggle"
+          ><i class="fa-solid fa-bars"></i
+        ></a>
+        <div class="chats">
+          <div class="welcomeMessage">
+            <h1>AI Character Engine Alpha</h1>
+            <p>
+              Welcome to the alpha release of our AI Character Engine Demo for
+              "Melodies of the Heart"! Immerse yourself in a sneak peek of the
+              interactive character experience that awaits in our upcoming game.
+            </p>
+            <br />
+            <p><strong>What To Expect:</strong></p>
+            <br />
+            <strong>Meet the characters</strong>
+            <p>
+              Engage in dynamic conversations with two characters from "Melodies
+              of the Heart" — Kajiwara Kame and Kishi Shizuka, and a supporting
+              Vocaloid character — Hatsune Miku. Each character has a dumbed
+              down prompt, preserving the essence of their personalities without
+              revealing spoilers.
+            </p>
+            <br />
+            <strong>Converse with emotion</strong>
+            <p>
+              Chat freely with Kame, Shizuka and Miku by simply addressing them.
+              Witness their emotions unfold in real-time as they respond to your
+              words, showcasing a glimpse of the emotional depth our AI
+              Character Engine, powered by ChatGPT, brings to interactive
+              storytelling.
+            </p>
+            <br />
+            <p><strong>API coming soon!</strong></p>
+            <p>
+              This demo is a preview of the upcoming API release. Experience the
+              seamless integration of our Character Engine and get a taste of
+              the possibilities for your own projects.
+            </p>
+            <br />
+            <p><strong>Disclaimer</strong></p>
+            <p>
+              Please note that this demo is in its alpha release stage. While we
+              strive for a smooth experience, you may encounter it sometimes
+              having an identity crisis, straight up refusing to answer, and
+              other unexpected behavior. Your valuable feedback will aid us in
+              refining and enhancing the engine.
+            </p>
+            <br />
+            <p><strong>Conversations are being logged</strong></p>
+            <p>
+              Conversations you engage with Kame, Shizuka, and Miku would be
+              logged in our servers, so that we can gain insight on issues. It's
+              also used to help you get back to previous conversations.
+            </p>
+          </div>
+        </div>
+        <div class="inputs">
+          <input
+            type="text"
+            name="Message input"
+            id="msgInput"
+            placeholder="Message..."
+            autocomplete="off"
+          />
+          <button class="button send">Send</button>
+        </div>
       </div>
     </div>
-    <div class="sidebar"></div>
   </body>
   <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
   <script src="../scripts/interactions.js"></script>

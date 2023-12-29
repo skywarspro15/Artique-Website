@@ -363,6 +363,14 @@ a.social {
   pointer-events: none;
 }
 
+.mainContainer {
+  display: flex;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
 .chatContainer {
   top: 0;
   left: 0;
@@ -371,6 +379,90 @@ a.social {
   display: flex;
   flex-direction: column;
   gap: 15px;
+}
+
+.chatContainer.main {
+  width: 20%;
+  height: 98%;
+  transition: all 1s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.chatContainer.main.sidebarHidden {
+  width: 100%;
+}
+
+.sidebar.hidden {
+  width: 0;
+  opacity: 0;
+}
+
+.sidebar {
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  transition: all 1s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.sidebar .conversations {
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  height: 90%;
+  margin-top: 10px;
+}
+
+.sidebar .options {
+  display: flex;
+  flex-direction: column;
+  height: 10%;
+  justify-content: center;
+}
+
+.sidebar .menu-item {
+  padding-left: 10px;
+  text-decoration: none;
+  color: var(--fg-color);
+  width: 90%;
+}
+
+.sidebar .menu-item:hover {
+  font-weight: bold;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.sidebar .conversations .menu-item {
+  animation: enter-chat 1s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.sidebar .status {
+  padding: 10px;
+}
+
+.sidebar .loader {
+  align-self: center;
+  justify-self: center;
+  width: 100%;
+  height: 100%;
+}
+
+.sidebarToggle {
+  display: flex;
+  position: sticky;
+  top: 20px;
+  margin-left: 20px;
+  right: 0;
+  text-decoration: none;
+  color: var(--fg-color);
+}
+
+.loader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .welcomeMessage {
@@ -466,6 +558,63 @@ input::placeholder {
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
+.lds-ellipsis {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+.lds-ellipsis div {
+  position: absolute;
+  top: 33px;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: var(--fg-color);
+  animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+.lds-ellipsis div:nth-child(1) {
+  left: 8px;
+  animation: lds-ellipsis1 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(2) {
+  left: 8px;
+  animation: lds-ellipsis2 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(3) {
+  left: 32px;
+  animation: lds-ellipsis2 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(4) {
+  left: 56px;
+  animation: lds-ellipsis3 0.6s infinite;
+}
+
+@keyframes lds-ellipsis1 {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes lds-ellipsis3 {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+@keyframes lds-ellipsis2 {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(24px, 0);
+  }
 }
 
 @keyframes wheel {
@@ -646,6 +795,18 @@ input::placeholder {
     align-self: flex-end;
     margin: 0;
     padding: 0;
+  }
+  .chatContainer.main {
+    width: 95%;
+    height: 95%;
+  }
+
+  .sidebar {
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    width: 20%;
   }
 }
 

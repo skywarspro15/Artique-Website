@@ -25,6 +25,13 @@ function themeToggle() {
   }
 }
 
+function sidebarToggle() {
+  const chatContainer = document.querySelector(".chatContainer.main");
+  const sidebar = document.querySelector(".sidebar");
+  chatContainer.classList.toggle("sidebarHidden");
+  sidebar.classList.toggle("hidden");
+}
+
 if (localStorage.getItem("theme") == "dark") {
   if (!body.classList.contains("dark-mode")) {
     body.classList.toggle("dark-mode");

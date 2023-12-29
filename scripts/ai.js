@@ -234,6 +234,9 @@ let msgInput = document.getElementById("msgInput");
 let sendButton = document.querySelector(".send");
 let chats = document.querySelector(".chats");
 
+let conversations = document.querySelector(".conversations");
+let curConversation = null;
+
 let socket = io("https://olive.nxw.pw:6969/");
 let indicator;
 
@@ -285,6 +288,38 @@ async function sendMessage() {
   }
 }
 
+function addConversation(conversation) {
+  let menuItem = document.createElement("a");
+  menuItem.className = "menu-item";
+  menuItem.innerText = conversation.conversationName;
+  menuItem.addEventListener("click", () => {
+    continueConversation(conversation);
+  });
+  conversations.appendChild(menuItem);
+}
+
+function addListStatus(statusText) {
+  let status = document.createElement("p");
+  status.className = "status";
+  status.innerText = statusText;
+  conversations.appendChild(status);
+}
+
+function continueConversation(conversation) {
+  socket.emit("continueConversation", conversation);
+  curConversation = conversation;
+}
+
+socket.on("conversations", (data) => {
+  conversations.innerHTML = "";
+  if (data.length == 0) {
+    addListStatus("No conversations saved");
+  }
+  data.forEach((conversation) => {
+    addConversation(conversation);
+  });
+});
+
 socket.on("connect", () => {
   createMessage(
     "System",
@@ -293,6 +328,34 @@ socket.on("connect", () => {
       placeholder +
       '"'
   );
+  socket.emit("getConversations");
+});
+
+socket.on("conversationReady", () => {
+  const welcomeMessage = document.querySelector(".welcomeMessage");
+
+  [...chats.children].forEach((child) =>
+    child !== welcomeMessage ? chats.removeChild(child) : null
+  );
+  let context = curConversation.conversation;
+  context.forEach((message) => {
+    if (message.role == "user") {
+      // Assuming `conversation` is a string containing your chatbot's conversation
+      let content = message.content;
+      let lines = content.split("\n"); // Split the conversation into lines
+
+      // Remove the last two lines
+      lines.splice(-2, 2);
+
+      // Join the lines back into a single string
+      content = lines.join("\n");
+
+      createMessage("You", content, true);
+    }
+    if (message.role == "assistant") {
+      createMessage(message.name, message.content, false);
+    }
+  });
 });
 
 socket.on("characterResponse", (resp) => {
