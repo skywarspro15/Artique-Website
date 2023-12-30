@@ -28,8 +28,18 @@ function themeToggle() {
 function sidebarToggle() {
   const chatContainer = document.querySelector(".chatContainer.main");
   const sidebar = document.querySelector(".sidebar");
-  chatContainer.classList.toggle("sidebarHidden");
+  chatContainer.classList.toggle("sidebarVisible");
   sidebar.classList.toggle("hidden");
+}
+
+function openCharacterList() {
+  let modal = document.querySelector(".characterSelect");
+  modal.style.display = "flex";
+}
+
+function closeModal(elmClass) {
+  let modal = document.querySelector(`.${elmClass}`);
+  modal.style.display = "none";
 }
 
 if (localStorage.getItem("theme") == "dark") {
@@ -66,6 +76,19 @@ for (let i = 0; i < scrollAnim.length; i++) {
   const elements = scrollAnim[i];
   observer.observe(elements);
 }
+
+let closeButtons = document.querySelectorAll(".close");
+let closeButtonsArray = [...closeButtons];
+
+closeButtonsArray.forEach((button) => {
+  if (!button.hasAttribute("close_id")) {
+    return;
+  }
+  console.log(button.getAttribute("close_id"));
+  button.addEventListener("click", () => {
+    closeModal(button.getAttribute("close_id"));
+  });
+});
 
 tippy("#viewGithub", {
   content: "View site's source code",

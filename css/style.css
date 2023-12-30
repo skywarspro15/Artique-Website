@@ -41,6 +41,11 @@ body {
   color: var(--fg-color);
   font-family: Satoshi-Variable, "Segoe UI", "Helvetica", sans-serif;
   scroll-behavior: smooth;
+  /* Firefox-specific scrollbar color */
+  scrollbar-color: var(--input-fore) var(--bg-color);
+
+  /* Prevent chat page from overflowing horizontally with sidebar open. */
+  overflow-x: hidden;
 }
 
 *:before,
@@ -382,17 +387,123 @@ a.social {
 }
 
 .chatContainer.main {
-  width: 20%;
+  position: absolute;
+  left: 0;
+  width: 100%;
   height: 98%;
   transition: all 1s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
-.chatContainer.main.sidebarHidden {
+.chatContainer.main.sidebarVisible {
+  position: absolute;
+  left: 191px;
+  /* Considered doing this but it looks a bit strange.. */
+  /* width: calc(100% - 191px); */
+}
+
+.modal.hidden {
+  display: none;
+}
+
+.modal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: brightness(80%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  display: none;
+}
+
+.modal .modalContents {
+  background: var(--bg-color);
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  box-shadow: 0px 8.5px 21px rgba(0, 0, 0, 0.145),
+    0px 68px 168px rgba(0, 0, 0, 0.29);
+}
+
+.modal .modalContents .titleBar {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-self: center;
+}
+
+.modal .titleBar h1 {
   width: 100%;
 }
 
+.modal .titleBar .close {
+  color: var(--fg-color);
+  font-size: 28px;
+  font-weight: bold;
+  user-select: none;
+  align-self: flex-end;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+.modal .titleBar .close:hover {
+  cursor: pointer;
+}
+
+.modal .modalContents .charList {
+  height: 100%;
+  width: 100%;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  gap: 20px;
+  align-items: center;
+}
+
+.modal .charList .character {
+  width: 95%;
+  padding: 15px;
+  margin: 0;
+  background: var(--post-color);
+  border: 1px solid var(--post-footer);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.character .hint {
+  font-style: italic;
+}
+
+.modal .charList .loader {
+  align-self: center;
+  justify-self: center;
+}
+
+.modal .charList .characterInfo {
+  display: flex;
+  height: 20%;
+  align-items: center;
+  gap: 5px;
+}
+
+.characterInfo img {
+  height: 25px;
+  border-radius: 5px;
+}
+
 .sidebar.hidden {
-  width: 0;
+  left: -191px;
   opacity: 0;
 }
 
@@ -403,12 +514,16 @@ a.social {
   flex-direction: column;
   width: 80%;
   transition: all 1s cubic-bezier(0.19, 1, 0.22, 1);
+  position: absolute;
+  left: 0;
+  width: 191px;
+  height: 100%;
 }
 
 .sidebar .conversations {
   display: flex;
   flex-direction: column;
-  overflow-y: scroll;
+  overflow-y: auto;
   height: 90%;
   margin-top: 10px;
 }
@@ -513,7 +628,7 @@ input::placeholder {
 .chatContainer .chats {
   display: flex;
   flex-direction: column;
-  overflow: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
 }
 
@@ -796,7 +911,7 @@ input::placeholder {
     margin: 0;
     padding: 0;
   }
-  .chatContainer.main {
+  /* .chatContainer.main {
     width: 95%;
     height: 95%;
   }
@@ -807,6 +922,17 @@ input::placeholder {
     display: flex;
     flex-direction: column;
     width: 20%;
+  } */
+  .modal .modalContents {
+    background: var(--bg-color);
+    width: 50%;
+    height: 80%;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    box-shadow: 0px 8.5px 21px rgba(0, 0, 0, 0.145),
+      0px 68px 168px rgba(0, 0, 0, 0.29);
   }
 }
 

@@ -33,7 +33,9 @@
           </div>
         </div>
         <div class="options">
-          <a href="" class="menu-item">Add characters</a>
+          <a href="javascript:openCharacterList()" class="menu-item"
+            >Add characters</a
+          >
           <a href="javascript:themeToggle()" class="menu-item">Toggle theme</a>
         </div>
       </div>
@@ -103,6 +105,24 @@
             autocomplete="off"
           />
           <button class="button send">Send</button>
+        </div>
+      </div>
+    </div>
+    <div class="modal characterSelect">
+      <div class="modalContents">
+        <div class="titleBar">
+          <h1>Add characters</h1>
+          <span class="close" close_id="characterSelect">&times;</span>
+        </div>
+        <div class="charList">
+          <div class="loader">
+            <div class="lds-ellipsis">
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
