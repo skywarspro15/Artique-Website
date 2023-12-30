@@ -46,6 +46,11 @@ body {
 
   /* Prevent chat page from overflowing horizontally with sidebar open. */
   overflow-x: hidden;
+  /* Firefox-specific scrollbar color */
+  scrollbar-color: var(--input-fore) var(--bg-color);
+
+  /* Prevent chat page from overflowing horizontally with sidebar open. */
+  overflow-x: hidden;
 }
 
 *:before,
@@ -390,6 +395,9 @@ a.social {
   position: absolute;
   left: 0;
   width: 100%;
+  position: absolute;
+  left: 0;
+  width: 100%;
   height: 98%;
   transition: all 1s cubic-bezier(0.19, 1, 0.22, 1);
 }
@@ -518,11 +526,16 @@ a.social {
   left: 0;
   width: 191px;
   height: 100%;
+  position: absolute;
+  left: 0;
+  width: 191px;
+  height: 100%;
 }
 
 .sidebar .conversations {
   display: flex;
   flex-direction: column;
+  overflow-y: auto;
   overflow-y: auto;
   height: 90%;
   margin-top: 10px;
@@ -628,6 +641,7 @@ input::placeholder {
 .chatContainer .chats {
   display: flex;
   flex-direction: column;
+  overflow-y: auto;
   overflow-y: auto;
   overflow-x: hidden;
 }
@@ -911,6 +925,7 @@ input::placeholder {
     margin: 0;
     padding: 0;
   }
+  /* .chatContainer.main {
   /* .chatContainer.main {
     width: 95%;
     height: 95%;
