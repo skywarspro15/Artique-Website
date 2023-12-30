@@ -28,7 +28,7 @@ function themeToggle() {
 function sidebarToggle() {
   const chatContainer = document.querySelector(".chatContainer.main");
   const sidebar = document.querySelector(".sidebar");
-  chatContainer.classList.toggle("sidebarHidden");
+  chatContainer.classList.toggle("sidebarVisible");
   sidebar.classList.toggle("hidden");
 }
 
