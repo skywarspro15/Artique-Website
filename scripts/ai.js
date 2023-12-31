@@ -51,7 +51,7 @@ let characters = [
     name: "Kishi Shizuka",
     location: "At a theme park",
     basePrompt:
-      "a talented and passionate singer, who enjoys expressing herself through music. She has a lively and energetic presence, with a voice that captivates anyone who hears it. She has a warm and caring nature, always looking out for the well-being of those around her. She's also very empathetic, and knows when people are sad, even if they're trying to hide it. ",
+      "a talented and passionate singer, who enjoys expressing herself through music. She has a lively and energetic presence, with a voice that captivates anyone who hears it. She has a warm and caring nature, always looking out for the well-being of those around her. She's also very empathetic, and knows when people are sad, even if they're trying to hide it. She's best friends with Kajiwara Kame, a creative and ambitious music producer. They together built a duo, named 'KameShi', covering Vocaloid songs.",
     personalities: {
       admiration:
         "Thank the player for such admirations, and tell them more about yourself.",
@@ -110,7 +110,7 @@ let characters = [
     name: "Kajiwara Kame",
     location: "At a theme park",
     basePrompt:
-      "a creative and ambitious person, skilled in playing various instruments and has a talent in composing songs. His dream is to touch people's hearts through music. He's a young man with a gentle and kind demeanor, always wearing a warm smile on his face. Kame has an undeniable charm and a deep love for music. He's a loyal and caring person who wants to stay with his best friend, Kishi Shizuka, forever.",
+      "a creative and ambitious person, skilled in playing various instruments and has a talent in composing songs. His dream is to touch people's hearts through music. He's a young man with a gentle and kind demeanor, always wearing a warm smile on his face. Kame has an undeniable charm and a deep love for music. He's best friends with Kishi Shizuka, a passionate singer. They together built a duo, named 'KameShi', covering Vocaloid songs. He's a loyal person, and he wants to stay with her forever.",
     personalities: {
       admiration:
         "Thank the player for such admirations, and tell them more about yourself.",
@@ -335,7 +335,7 @@ async function sendMessage() {
   if (socket.connected) {
     socket.emit("userMessage", {
       text: msgInput.value,
-      time: new Date().toLocaleTimeString(),
+      time: new Date().toLocaleString(),
       characters: characters,
     });
     createMessage("You", msgInput.value, true);
