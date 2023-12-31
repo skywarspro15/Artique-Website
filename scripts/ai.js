@@ -289,7 +289,6 @@ let sendButton = document.querySelector(".send");
 let chats = document.querySelector(".chats");
 
 let conversations = document.querySelector(".conversations");
-let curConversation = null;
 
 let charList = document.querySelector(".charList");
 
@@ -438,7 +437,16 @@ function addCharacterToChat(data) {
 
 function continueConversation(conversation) {
   socket.emit("continueConversation", conversation);
-  curConversation = conversation;
+  const welcomeMessage = document.querySelector(".welcomeMessage");
+
+  [...chats.children].forEach((child) =>
+    child !== welcomeMessage ? chats.removeChild(child) : null
+  );
+
+  createMessage(
+    "System",
+    `Loading conversation ${conversation.conversationName}`
+  );
 }
 
 socket.on("conversations", (data) => {
@@ -463,11 +471,7 @@ socket.on("connect", () => {
   socket.emit("getPrompts");
 });
 
-socket.on("conversationReady", (conversationId) => {
-  if (curConversation.conversationId != conversationId) {
-    return;
-  }
-
+socket.on("conversationReady", (curConversation) => {
   const welcomeMessage = document.querySelector(".welcomeMessage");
 
   if ("characters" in curConversation) {

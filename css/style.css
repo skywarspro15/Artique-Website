@@ -489,6 +489,11 @@ a.social {
   gap: 5px;
 }
 
+.modal .charList .character:hover {
+  cursor: pointer;
+  background: var(--bg-color);
+}
+
 .character .hint {
   font-style: italic;
 }
