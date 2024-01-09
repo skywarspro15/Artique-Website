@@ -1,0 +1,75 @@
+@font-face {
+  font-family: "Batang";
+  src: url("../fonts/BATANG.woff") format("woff"),
+    url("../fonts/BATANG.ttf") format("truetype");
+  font-display: swap;
+  font-style: normal;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  background: rgb(0, 51, 201);
+  background: linear-gradient(
+    180deg,
+    rgba(0, 51, 201, 1) 0%,
+    rgba(201, 0, 199, 1) 100%
+  );
+  color: white;
+  font-family: "Batang", "Georgia", "Times New Roman", serif !important;
+  scroll-behavior: smooth;
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+}
+
+.hero {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.hero .subtitle {
+  font-size: 20px;
+}
+
+.hero .title {
+  font-size: 50px;
+  letter-spacing: 3px;
+  font-weight: 100;
+  text-shadow: 1px 1px 10px #fff, 1px 1px 10px #ccc;
+}
+
+.buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.button {
+  font-size: 15px;
+  padding: 10px;
+  background: none;
+  color: white;
+  font-family: inherit;
+  border: 1px solid white;
+  transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.button:hover {
+  cursor: pointer;
+  box-shadow: 0 0.5em 0.5em -0.4em white;
+  transform: translateY(-0.25em);
+}
