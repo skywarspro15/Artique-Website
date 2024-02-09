@@ -301,6 +301,104 @@ let reconnect = false;
 
 let curConversation = null;
 
+function parseMarkdown(text) {
+  let inCodeBlock = false; // flag to track if we're inside a code block
+  let parsedText = "";
+
+  text = text.replace(/&/g, "&amp;");
+  text = text.replace(/</g, "&lt;");
+  text = text.replace(/>/g, "&gt;");
+
+  // Split the text into lines
+  const lines = text.split("\n");
+
+  // Loop through each line
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+
+    // Check if we're inside a code block
+    if (inCodeBlock) {
+      // If we're inside a code block, check if this line ends the block
+      if (line.trim() === "```") {
+        inCodeBlock = false;
+        parsedText += "</code></pre>";
+      } else {
+        // If we're still inside the code block, add the line to the parsed text
+        parsedText += line + "\n";
+      }
+    } else {
+      // If we're not inside a code block, check if this line starts a code block
+      if (line.trim().startsWith("```")) {
+        inCodeBlock = true;
+        const language = line.trim().slice(3);
+        parsedText += `<pre><code class="language-${language}">`;
+      } else {
+        // If we're not inside a code block, parse the line as normal markdown
+        parsedText += parseMarkdownLine(line) + "\n";
+      }
+    }
+  }
+
+  // If we're still inside a code block at the end of the text, close it
+  if (inCodeBlock) {
+    parsedText += "</code></pre>";
+  }
+
+  const codeTags =
+    parsedText.match(/<code.+?class="language-(.*?)".*?>[\s\S]+?<\/code>/gim) ||
+    [];
+  for (let i = 0; i < codeTags.length; i++) {
+    const elem = document.createElement("div");
+    elem.innerHTML = codeTags[i];
+    const code = elem.textContent;
+    const lang = codeTags[i].match(/class="language-([^"]+)"/i);
+    const language = lang ? lang[1] : "plaintext";
+    try {
+      const highlightedCode = hljs.highlight(code, { language }).value;
+      parsedText = parsedText.replace(
+        codeTags[i],
+        `<code class="language-${language}">${highlightedCode}</code>`
+      );
+    } catch (e) {
+      // ignore errors that come from highlighting, sometimes hljs can throw errors on unknown langs and such
+    }
+  }
+  return parsedText;
+}
+
+function parseMarkdownLine(line) {
+  // Headers
+
+  if (line.trim() == "") {
+    return "<br>";
+  }
+
+  line = line.replace(/^# (.+)/gm, "<h1>$1</h1>");
+  line = line.replace(/^## (.+)/gm, "<h2>$1</h2>");
+  line = line.replace(/^### (.+)/gm, "<h3>$1</h3>");
+  line = line.replace(/^#### (.+)/gm, "<h4>$1</h4>");
+  line = line.replace(/^##### (.+)/gm, "<h5>$1</h5>");
+  line = line.replace(/^###### (.+)/gm, "<h6>$1</h6>");
+
+  // Bold and italic
+  line = line.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+  line = line.replace(/\*(.+?)\*/g, "<em>$1</em>");
+
+  // Links
+  line = line.replace(/\[(.+?)\]\((.+?)\)/g, '<a href="$2">$1</a>');
+
+  // Images
+  line = line.replace(/!\[(.+?)\]\((.+?)\)/g, '<img src="$2" alt="$1">');
+
+  // Inline code
+  line = line.replace(/`(.+?)`/g, "<code>$1</code>");
+
+  // Paragraphs
+  line = "<p>" + line + "</p>";
+
+  return line;
+}
+
 function createMessage(name, content, you = false) {
   let charName = document.createElement("p");
   charName.classList.add("name");
@@ -308,7 +406,7 @@ function createMessage(name, content, you = false) {
 
   let messageContent = document.createElement("p");
   messageContent.classList.add("bubble");
-  messageContent.innerText = content;
+  messageContent.innerHTML = parseMarkdown(content);
 
   if (you) {
     charName.classList.add("you");
