@@ -510,6 +510,12 @@ a.social {
   gap: 5px;
 }
 
+.modal textarea {
+  min-height: 60%;
+  padding: 10px;
+  font-size: 15px;
+}
+
 .characterInfo img {
   height: 25px;
   border-radius: 5px;
@@ -549,7 +555,8 @@ a.social {
 .sidebar .options {
   display: flex;
   flex-direction: column;
-  height: 10%;
+  padding-top: 10px;
+  padding-bottom: 10px;
   justify-content: center;
 }
 
@@ -618,7 +625,8 @@ a.social {
   gap: 10px;
 }
 
-input {
+input,
+textarea {
   font-family: inherit;
   color: var(--input-fore);
   background-color: var(--input-back);

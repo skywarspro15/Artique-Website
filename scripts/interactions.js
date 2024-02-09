@@ -37,6 +37,11 @@ function openCharacterList() {
   modal.style.display = "flex";
 }
 
+function openSetScenario() {
+  let modal = document.querySelector(".changeScenario");
+  modal.style.display = "flex";
+}
+
 function closeModal(elmClass) {
   let modal = document.querySelector(`.${elmClass}`);
   modal.style.display = "none";

@@ -33,6 +33,9 @@
           </div>
         </div>
         <div class="options">
+          <a href="javascript:openSetScenario()" class="menu-item"
+            >Set scenario</a
+          >
           <a href="javascript:openCharacterList()" class="menu-item"
             >Add characters</a
           >
@@ -123,6 +126,22 @@
               <div></div>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal changeScenario">
+      <div class="modalContents">
+        <div class="titleBar">
+          <h1>Set scenario</h1>
+          <span class="close" close_id="changeScenario">&times;</span>
+        </div>
+        <h4>Set a scenario for your conversation</h4>
+        <br />
+        <p>Enter your conversation's scenario:</p>
+        <br />
+        <textarea name="sContent" id="sContent" cols="20" rows="10"></textarea>
+        <div class="buttons">
+          <button class="button setScenario">Set scenario</button>
         </div>
       </div>
     </div>
