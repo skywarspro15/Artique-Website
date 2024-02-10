@@ -678,5 +678,9 @@ setScenarioButton.addEventListener("click", () => {
     alert("You're not connected yet!");
     return;
   }
+  if (sContent.value.trim() == "") {
+    alert("Scenario content must not be blank");
+    return;
+  }
   socket.emit("setScenario", sContent.value);
 });

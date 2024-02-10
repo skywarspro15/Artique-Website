@@ -437,7 +437,7 @@ a.social {
   padding: 20px;
   box-shadow: 0px 8.5px 21px rgba(0, 0, 0, 0.145),
     0px 68px 168px rgba(0, 0, 0, 0.29);
-  overflow: scroll;
+  overflow: auto;
 }
 
 .modal .modalContents .titleBar {
