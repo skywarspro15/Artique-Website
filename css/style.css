@@ -435,9 +435,16 @@ a.social {
   display: flex;
   flex-direction: column;
   padding: 20px;
+  transform: translateY(0);
   box-shadow: 0px 8.5px 21px rgba(0, 0, 0, 0.145),
     0px 68px 168px rgba(0, 0, 0, 0.29);
   overflow: auto;
+  transition: all 1s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.modal.hidden .modalContents {
+  transform: translateY(50px);
+  opacity: 0;
 }
 
 .modal .modalContents .titleBar {
@@ -683,7 +690,7 @@ input::placeholder {
   animation: enter-chat 1s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
-.ga-hero {
+.ld-hero {
   top: 0;
   left: 0;
   width: 100%;
@@ -693,14 +700,16 @@ input::placeholder {
   justify-content: center;
   align-items: center;
   background-color: var(--post-color);
+  text-align: center;
 }
 
-.ga-hero-container {
+.ld-hero-container {
   width: 90%;
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
 }
 
 .lds-ellipsis {
@@ -775,6 +784,27 @@ input::placeholder {
 }
 
 @media only screen and (min-width: 768px) {
+  .ld-hero {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 35%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--post-color);
+    text-align: left;
+  }
+
+  .ld-hero-container {
+    width: 90%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+  }
   .hero {
     display: flex;
     flex-direction: column;
@@ -960,8 +990,14 @@ input::placeholder {
     display: flex;
     flex-direction: column;
     padding: 20px;
+    transform: translateY(0);
     box-shadow: 0px 8.5px 21px rgba(0, 0, 0, 0.145),
       0px 68px 168px rgba(0, 0, 0, 0.29);
+    transition: all 1s cubic-bezier(0.19, 1, 0.22, 1);
+  }
+  .modal.hidden .modalContents {
+    transform: translateY(50px);
+    opacity: 0;
   }
 }
 

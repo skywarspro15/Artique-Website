@@ -639,6 +639,7 @@ socket.on("characterResponse", (resp) => {
 
 socket.on("typing", (data) => {
   createTypingIndicator(data.characterName);
+  document.title = "Chatting with " + data.characterName;
 });
 
 socket.on("disconnect", () => {

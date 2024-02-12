@@ -35,16 +35,21 @@ function sidebarToggle() {
 function openCharacterList() {
   let modal = document.querySelector(".characterSelect");
   modal.style.display = "flex";
+  modal.classList.remove("hidden");
 }
 
 function openSetScenario() {
   let modal = document.querySelector(".changeScenario");
   modal.style.display = "flex";
+  modal.classList.remove("hidden");
 }
 
 function closeModal(elmClass) {
   let modal = document.querySelector(`.${elmClass}`);
-  modal.style.display = "none";
+  modal.classList.add("hidden");
+  setTimeout(() => {
+    modal.style.display = "none";
+  }, 200);
 }
 
 if (localStorage.getItem("theme") == "dark") {
