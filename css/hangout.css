@@ -1,0 +1,9 @@
+html,
+body {
+  background-color: black;
+  color: white;
+}
+
+* {
+  font-family: Satoshi-Variable, "Segoe UI", "Helvetica", sans-serif;
+}
