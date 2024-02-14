@@ -642,6 +642,14 @@ socket.on("typing", (data) => {
   document.title = "Chatting with " + data.characterName;
 });
 
+socket.on("error", (data) => {
+  console.error("ERR!", data);
+  let errContent =
+    "There was an error processing your message. \n**" + data.error + "**";
+  createMessage("System", errContent);
+  typingAllowed = true;
+});
+
 socket.on("disconnect", () => {
   reconnect = true;
   const welcomeMessage = document.querySelector(".welcomeMessage");
