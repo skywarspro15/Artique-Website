@@ -100,6 +100,37 @@ closeButtonsArray.forEach((button) => {
   });
 });
 
+let navbar = document.querySelector("nav");
+let navContainer = document.querySelector(".nav-container");
+let navbarText = navContainer.querySelector("p.name");
+
+document.addEventListener("wheel", () => {
+  let scrollVal = document.body.scrollTop;
+  if (scrollVal > 1) {
+    navContainer.style.boxShadow =
+      "0 2.8px 2.2px rgba(0, 0, 0, 0.034), 0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06),0 22.3px 17.9px rgba(0, 0, 0, 0.072), 0 41.8px 33.4px rgba(0, 0, 0, 0.086),0 100px 80px rgba(0, 0, 0, 0.12)";
+    navContainer.style.background = "var(--bg-color)";
+    navbarText.style.color = "var(--fg-color)";
+  } else {
+    navContainer.style.boxShadow = "none";
+    navContainer.style.background = "transparent";
+    navbarText.style.color = "white";
+  }
+  setTimeout(() => {
+    let scrollVal = document.body.scrollTop;
+    if (scrollVal > 1) {
+      navContainer.style.boxShadow =
+        "0 2.8px 2.2px rgba(0, 0, 0, 0.034), 0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06),0 22.3px 17.9px rgba(0, 0, 0, 0.072), 0 41.8px 33.4px rgba(0, 0, 0, 0.086),0 100px 80px rgba(0, 0, 0, 0.12)";
+      navContainer.style.background = "var(--bg-color)";
+      navbarText.style.color = "var(--fg-color)";
+    } else {
+      navContainer.style.boxShadow = "none";
+      navContainer.style.background = "transparent";
+      navbarText.style.color = "white";
+    }
+  }, 500);
+});
+
 tippy("#viewGithub", {
   content: "View site's source code",
   animation: "shift-away",

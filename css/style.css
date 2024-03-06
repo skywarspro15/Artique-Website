@@ -1,3 +1,11 @@
+@font-face {
+  font-family: "Batang";
+  src: url("../fonts/BATANG.woff") format("woff"),
+    url("../fonts/BATANG.ttf") format("truetype");
+  font-display: swap;
+  font-style: normal;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -35,8 +43,8 @@
 
 html,
 body {
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   background-color: var(--bg-color);
   color: var(--fg-color);
   font-family: Satoshi-Variable, "Segoe UI", "Helvetica", sans-serif;
@@ -51,6 +59,8 @@ body {
 
   /* Prevent chat page from overflowing horizontally with sidebar open. */
   overflow-x: hidden;
+  overflow-y: auto;
+  box-sizing: border-box;
 }
 
 *:before,
@@ -76,17 +86,46 @@ body {
 nav {
   display: flex;
   align-items: center;
-  margin: 10px;
+  justify-content: center;
   gap: 15px;
+  padding: 10px;
+  background: transparent;
+  position: fixed;
+  z-index: 6000000;
+  width: 100%;
+  margin: 0;
+  top: 0;
+  left: 0;
+  border-radius: 5px;
+}
+
+.nav-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background: transparent;
+  width: 90%;
+  margin: 0;
+  top: 0;
+  left: 0;
+  border-radius: 5px;
+  gap: 15px;
+  padding: 15px;
+  backdrop-filter: blur(50px);
+  box-shadow: none;
+  animation: enter 1s cubic-bezier(0.19, 1, 0.22, 1);
+  transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
 nav img.logo {
-  width: 75px;
+  width: 40px;
 }
 
 nav p.name {
-  font-size: 25px;
+  font-size: 15px;
   font-weight: 600;
+  color: white;
+  width: 86%;
 }
 
 nav .button {
@@ -122,10 +161,31 @@ nav .button {
   align-items: center;
   justify-content: center;
   text-align: center;
-  height: 90%;
+  height: 100%;
   top: 0;
   left: 0;
   animation: enter 1s cubic-bezier(0.19, 1, 0.22, 1);
+  background: url("../images/background.png");
+  background-size: cover;
+}
+
+.hero .big-text {
+  font-family: "Batang", "Georgia", "Times New Roman", serif;
+  color: white;
+  font-size: 38px;
+  width: 150%;
+  margin: -15px;
+}
+
+.hero iframe {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  z-index: 600;
+  border-radius: 8px;
+  box-shadow: 5px 4px 400px -42px rgba(255, 255, 255, 0.75);
+  -webkit-box-shadow: 5px 4px 400px -42px rgba(255, 255, 255, 0.75);
+  -moz-box-shadow: 5px 4px 400px -42px rgba(255, 255, 255, 0.75);
+  background-color: black;
 }
 
 .hero .hero-container {
@@ -135,34 +195,6 @@ nav .button {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-}
-
-.hero .hero-container .section {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  width: 100%;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-}
-
-.hero .hero-container .section.left {
-  text-align: center;
-}
-
-.hero .hero-container .section.left .title {
-  text-align: center;
-  width: 100%;
-}
-.hero .hero-container .section.left .subtitle {
-  text-align: center;
-  width: 100%;
-}
-
-.hero .hero-container .section.right {
-  text-align: right;
-  display: none;
 }
 
 iframe.demo {
@@ -784,6 +816,9 @@ input::placeholder {
 }
 
 @media only screen and (min-width: 768px) {
+  .nav-container {
+    backdrop-filter: none;
+  }
   .ld-hero {
     top: 0;
     left: 0;
@@ -805,55 +840,22 @@ input::placeholder {
     justify-content: center;
     align-items: flex-start;
   }
-  .hero {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    height: 90%;
-    top: 0;
-    left: 0;
-    animation: enter 1s cubic-bezier(0.19, 1, 0.22, 1);
-  }
 
   .hero .hero-container {
     width: 100%;
     height: 50%;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
   }
 
-  .hero .hero-container .section {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    width: 45%;
-    justify-content: center;
+  .hero .big-text {
+    font-size: 60px;
   }
 
-  .hero .hero-container .section.left {
-    text-align: left;
-  }
-
-  .hero .hero-container .section.right {
-    text-align: right;
-    display: inherit;
-  }
-
-  iframe.demo {
-    display: inherit;
-    width: 100%;
-    height: 100%;
-    box-shadow: 0px 2px 2px rgba(3, 7, 18, 0.01),
-      0px 7px 6px rgba(3, 7, 18, 0.01), 0px 17px 14px rgba(3, 7, 18, 0.02),
-      0px 30px 24px rgba(3, 7, 18, 0.03), 0px 46px 38px rgba(3, 7, 18, 0.04),
-      0px 67px 54px rgba(3, 7, 18, 0.04), 0px 91px 74px rgba(3, 7, 18, 0.05);
-    border-radius: 10px;
-    padding-top: 10px;
-    padding-bottom: 10px;
+  .hero iframe {
+    width: 40%;
   }
 
   .hero .title {
