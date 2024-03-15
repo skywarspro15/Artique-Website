@@ -516,12 +516,30 @@ function addCharacterToList(data) {
 
 function addCharacterToChat(data) {
   let curPrompt = "";
+  let curName = "";
   let hasErrors = false;
   if (data.prompt != null) {
     curPrompt = data.prompt;
   }
+  if (data.system != null) {
+    curPrompt = data.system;
+  }
+  if (data.label != null) {
+    curName = data.label;
+  }
+  if (data.name != null) {
+    curName = data.name;
+  }
+  if (curName == "") {
+    alert("Please name your character");
+    hasErrors = true;
+  }
+  if (curPrompt == "") {
+    alert("Please add a prompt to your character");
+    hasErrors = true;
+  }
   characters.forEach((character) => {
-    if (character.name == data.label) {
+    if (character.name == curName) {
       alert("Character already added");
       hasErrors = true;
     }
@@ -530,15 +548,30 @@ function addCharacterToChat(data) {
     return;
   }
   characters.push({
-    name: data.label,
+    name: curName,
     location: "At a location unmentioned",
     basePrompt: curPrompt,
     personalities: defaultPersonalities,
   });
-  alert(`Character ${data.label} has been added.`);
+  alert(`Character ${curName} has been added.`);
   let modal = document.querySelector(`.characterSelect`);
   modal.style.display = "none";
 }
+
+let addCustomButton = document.querySelector("#addCustom");
+
+function addCustom() {
+  let jsonInput = prompt("Enter JSON character data");
+  try {
+    addCharacterToChat(JSON.parse(jsonInput));
+  } catch (e) {
+    alert("Input must be valid JSON!");
+  }
+}
+
+addCustomButton.addEventListener("click", () => {
+  addCustom();
+});
 
 function continueConversation(conversation) {
   socket.emit("continueConversation", conversation);
