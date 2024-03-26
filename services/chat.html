@@ -39,7 +39,7 @@
           <a href="javascript:openCharacterList()" class="menu-item"
             >Add characters</a
           >
-          <a id="addCustom" class="menu-item">Add custom</a>
+          <a href="javascript:openCustomChar()" class="menu-item">Add custom</a>
           <a href="javascript:themeToggle()" class="menu-item">Toggle theme</a>
         </div>
       </div>
@@ -143,6 +143,22 @@
         <textarea name="sContent" id="sContent" cols="20" rows="10"></textarea>
         <div class="buttons">
           <button class="button setScenario">Set scenario</button>
+        </div>
+      </div>
+    </div>
+    <div class="modal addCustom">
+      <div class="modalContents">
+        <div class="titleBar">
+          <h1>Add a custom character</h1>
+          <span class="close" close_id="addCustom">&times;</span>
+        </div>
+        <h4>Add a Chatify-compatible custom character</h4>
+        <br />
+        <p>Enter JSON character data:</p>
+        <br />
+        <textarea name="cContent" id="cContent" cols="20" rows="10"></textarea>
+        <div class="buttons">
+          <button class="button addCustomChar">Add character</button>
         </div>
       </div>
     </div>

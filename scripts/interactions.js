@@ -44,6 +44,12 @@ function openSetScenario() {
   modal.classList.remove("hidden");
 }
 
+function openCustomChar() {
+  let modal = document.querySelector(".addCustom");
+  modal.style.display = "flex";
+  modal.classList.remove("hidden");
+}
+
 function closeModal(elmClass) {
   let modal = document.querySelector(`.${elmClass}`);
   modal.classList.add("hidden");

@@ -554,16 +554,18 @@ function addCharacterToChat(data) {
     personalities: defaultPersonalities,
   });
   alert(`Character ${curName} has been added.`);
-  let modal = document.querySelector(`.characterSelect`);
-  modal.style.display = "none";
+  closeModal("characterSelect");
 }
 
-let addCustomButton = document.querySelector("#addCustom");
+let addCustomButton = document.querySelector(".addCustomChar");
 
 function addCustom() {
-  let jsonInput = prompt("Enter JSON character data");
+  let cContent = document.querySelector("#cContent");
+  let jsonInput = cContent.value;
   try {
     addCharacterToChat(JSON.parse(jsonInput));
+    cContent.value = "";
+    closeModal("addCustom");
   } catch (e) {
     alert("Input must be valid JSON!");
   }
