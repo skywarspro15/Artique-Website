@@ -595,6 +595,10 @@ socket.on("conversations", (data) => {
   data.forEach((conversation) => {
     addConversation(conversation);
   });
+  if (reconnect && curConversation) {
+    console.log(curConversation);
+    continueConversation(curConversation);
+  }
 });
 
 socket.on("connect", () => {
@@ -612,16 +616,9 @@ socket.on("connect", () => {
       '"'
   );
   typingAllowed = true;
-  if (!reconnect) {
-    socket.emit("getConversations");
-    socket.emit("getPrompts");
-  } else {
-    console.log("reconnect");
-    if (curConversation) {
-      console.log(curConversation);
-      continueConversation(curConversation);
-    }
-  }
+  socket.emit("getPrompts");
+  console.log("reconnect");
+  socket.emit("getConversations");
 });
 
 socket.on("conversationReady", (conv) => {
