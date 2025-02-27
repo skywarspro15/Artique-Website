@@ -23,6 +23,23 @@ class Player {
       .text(playerData.name)
       .styleJs({ width: "100%", textAlign: "center" })
       .appendTo(this.playerDiv);
+
+    // Add proximity circle
+    this.proximityCircle = new Html("div")
+      .styleJs({
+        position: "absolute",
+        width: "500px",
+        height: "500px",
+        border: "2px solid rgba(0, 255, 0, 0.2)",
+        borderRadius: "50%",
+        // Center the circle by offsetting by half its width minus half the player width
+        transform: "translate(-100px, -120px)",
+        left: "-50px", // (500px - 200px) / 2 = 150px
+        top: "-50px",
+        pointerEvents: "none",
+        transition: "border-color 0.3s",
+      })
+      .appendTo(this.playerDiv);
   }
   changeName(newName) {
     this.playerName.text(newName);
@@ -35,6 +52,8 @@ class Player {
       fill: "forwards",
       duration: 100,
     });
+    this.x = x; // Store position
+    this.y = y;
   }
 }
 
@@ -83,8 +102,7 @@ let players = {};
 let curX = 0;
 let curY = 0;
 let curP;
-let pressed = false;
-let pKey = "";
+let pressedKeys = {};
 
 socket.on("playerData", (data) => {
   console.log(socket.id);
@@ -102,17 +120,20 @@ socket.on("playerData", (data) => {
     } else if (nickname) {
       localStorage.setItem("nickname", nickname);
     } else {
-      i;
       localStorage.setItem("nickname", data.name);
     }
   }
   socket.emit("nickname", { name: localStorage.getItem("nickname") });
   document.addEventListener("keydown", (e) => {
-    pKey = e.key;
-    pressed = true;
+    pressedKeys[e.key] = true;
+    // Add nickname change on 'n' key press
+    if (e.key.toLowerCase() === "n") {
+      changeNickname();
+    }
+    console.log(pressedKeys);
   });
-  document.addEventListener("keyup", () => {
-    pressed = false;
+  document.addEventListener("keyup", (e) => {
+    pressedKeys[e.key] = false;
   });
 });
 
@@ -132,15 +153,48 @@ socket.on("join", (player) => {
   sounds.playSound("wonderhoy");
 });
 
+function resetProximityStates() {
+  // Reset all circles to default state
+  Object.values(players).forEach((player) => {
+    player.proximityCircle.styleJs({ borderColor: "rgba(0, 255, 0, 0.2)" });
+  });
+}
+
 socket.on("leave", (data) => {
   players[data.id].destroyPlayer();
   delete players[data.id];
+  // Reset proximity states when a player leaves
+  resetProximityStates();
+  // Recheck proximity for remaining players
+  checkProximity();
 });
+
+function checkProximity() {
+  const PROXIMITY_RADIUS = 250;
+
+  // First reset all to default state
+  resetProximityStates();
+
+  // Then check for proximity
+  Object.entries(players).forEach(([id, player]) => {
+    if (id === socket.id || !player.x || !player.y) return; // Skip self or invalid positions
+
+    const dx = player.x - curX;
+    const dy = player.y - curY;
+    const distance = Math.sqrt(dx * dx + dy * dy);
+
+    if (distance < PROXIMITY_RADIUS * 2) {
+      player.proximityCircle.styleJs({ borderColor: "rgba(255, 255, 0, 0.4)" });
+      players[socket.id]?.proximityCircle.styleJs({
+        borderColor: "rgba(255, 255, 0, 0.4)",
+      });
+    }
+  });
+}
 
 socket.on("move", (data) => {
   players[data.id].move(data.x, data.y);
-  let inProximity = false;
-  console.log(data.x - curX < 500 && data.y - curY < 500);
+  checkProximity();
 });
 
 socket.on("nickname", (data) => {
@@ -148,23 +202,46 @@ socket.on("nickname", (data) => {
   players[data.id].changeName(data.name);
 });
 
+function changeNickname() {
+  const newNickname = prompt(
+    "Enter your new nickname (or click Cancel to keep current name):"
+  );
+  if (newNickname === null) {
+    // User clicked Cancel
+    return;
+  }
+  if (newNickname.trim() !== "") {
+    localStorage.setItem("nickname", newNickname);
+    socket.emit("nickname", { name: newNickname });
+    players[socket.id].changeName(newNickname);
+  }
+}
+
 function update() {
-  if (pressed) {
-    if (pKey == "w") {
-      curY = curY - 20;
-    }
-    if (pKey == "s") {
-      curY = curY + 20;
-    }
-    if (pKey == "a") {
-      curX = curX - 20;
-    }
-    if (pKey == "d") {
-      curX = curX + 20;
-    }
+  let moved = false;
+  if (pressedKeys["w"] || pressedKeys["ArrowUp"]) {
+    curY = curY - 20;
+    moved = true;
+  }
+  if (pressedKeys["s"] || pressedKeys["ArrowDown"]) {
+    curY = curY + 20;
+    moved = true;
+  }
+  if (pressedKeys["a"] || pressedKeys["ArrowLeft"]) {
+    curX = curX - 20;
+    moved = true;
+  }
+  if (pressedKeys["d"] || pressedKeys["ArrowRight"]) {
+    curX = curX + 20;
+    moved = true;
+  }
+
+  if (moved) {
     curP.move(curX, curY);
     socket.emit("move", { x: curX, y: curY });
+    checkProximity();
   }
+
   requestAnimationFrame(update);
 }
 
