@@ -3,6 +3,7 @@ import Html from "../scripts/html.js";
 class Player {
   constructor(playerData) {
     console.log(playerData);
+    this.peerID = playerData.peerID;
     this.playerDiv = new Html("div")
       .styleJs({
         display: "flex",
@@ -104,13 +105,84 @@ let curY = 0;
 let curP;
 let pressedKeys = {};
 
+let activeCalls = new Map(); // Track active calls
+let localStream = null; // Store local media stream
+let playersInProximity = new Set(); // Track players already in proximity
+
+async function setupMediaStream() {
+  try {
+    localStream = await navigator.mediaDevices.getUserMedia({
+      audio: true,
+      video: false,
+    });
+  } catch (err) {
+    console.error("Failed to get media stream:", err);
+  }
+}
+
+function handleIncomingCall(call) {
+  call.answer(localStream);
+  setupCallListeners(call);
+}
+
+function setupCallListeners(call) {
+  call.on("stream", (remoteStream) => {
+    const audio = new Audio();
+    audio.srcObject = remoteStream;
+    audio.play();
+    activeCalls.set(call.peer, { call, audio });
+  });
+
+  call.on("close", () => {
+    const callData = activeCalls.get(call.peer);
+    if (callData) {
+      callData.audio.srcObject = null;
+      activeCalls.delete(call.peer);
+    }
+  });
+}
+
+function initiateCall(peerId) {
+  // Don't initiate if we already have a call or no stream
+  if (activeCalls.has(peerId) || !localStream) return;
+
+  // Only initiate if this is a new player in proximity
+  if (!playersInProximity.has(peerId)) {
+    console.log("Initiating new call with:", peerId);
+    const call = curPeer.call(peerId, localStream);
+    setupCallListeners(call);
+    playersInProximity.add(peerId);
+  }
+}
+
+function endCall(peerId) {
+  const callData = activeCalls.get(peerId);
+  if (callData) {
+    callData.call.close();
+    callData.audio.srcObject = null;
+    activeCalls.delete(peerId);
+  }
+}
+
 socket.on("playerData", (data) => {
   console.log(socket.id);
   curP = new Player(data);
   players[socket.id] = curP;
-  curPeer = new Peer(data.peerID);
+  curPeer = new Peer(data.peerID, {
+    config: {
+      iceServers: [
+        {
+          urls: "turn:freestun.net:3478",
+          username: "free",
+          credential: "free",
+        },
+      ],
+    },
+  });
   curPeer.on("open", (id) => {
     console.log("Peer opened", id);
+    setupMediaStream();
+    curPeer.on("call", handleIncomingCall);
   });
   if (!localStorage.getItem("nickname")) {
     let nickname = prompt("What should others call you?");
@@ -161,23 +233,27 @@ function resetProximityStates() {
 }
 
 socket.on("leave", (data) => {
+  // End call if the leaving player was in proximity
+  const leavingPlayer = players[data.id];
+  if (leavingPlayer && leavingPlayer.peerID) {
+    endCall(leavingPlayer.peerID);
+    playersInProximity.delete(leavingPlayer.peerID);
+  }
+
   players[data.id].destroyPlayer();
   delete players[data.id];
-  // Reset proximity states when a player leaves
   resetProximityStates();
-  // Recheck proximity for remaining players
   checkProximity();
 });
 
 function checkProximity() {
   const PROXIMITY_RADIUS = 250;
+  const currentlyInRange = new Set();
 
-  // First reset all to default state
   resetProximityStates();
 
-  // Then check for proximity
   Object.entries(players).forEach(([id, player]) => {
-    if (id === socket.id || !player.x || !player.y) return; // Skip self or invalid positions
+    if (id === socket.id || !player.x || !player.y) return;
 
     const dx = player.x - curX;
     const dy = player.y - curY;
@@ -188,8 +264,19 @@ function checkProximity() {
       players[socket.id]?.proximityCircle.styleJs({
         borderColor: "rgba(255, 255, 0, 0.4)",
       });
+      currentlyInRange.add(player.peerID);
+      initiateCall(player.peerID);
     }
   });
+
+  // More thorough cleanup of out-of-range players
+  for (const [peerId] of activeCalls) {
+    if (!currentlyInRange.has(peerId)) {
+      console.log("Ending call with out-of-range player:", peerId);
+      endCall(peerId);
+      playersInProximity.delete(peerId);
+    }
+  }
 }
 
 socket.on("move", (data) => {
