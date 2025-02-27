@@ -1,5 +1,7 @@
 import Html from "../scripts/html.js";
 
+let layoutDefinition = {};
+
 class Player {
   constructor(playerData) {
     console.log(playerData);
@@ -94,7 +96,7 @@ class soundManager {
 
 let sounds = new soundManager();
 
-sounds.loadSound("../audio/wonderhoy.mp3", "wonderhoy");
+sounds.loadSound("../audio/keef.wav", "wonderhoy");
 
 let socket = io("https://olive.nxw.pw:31338");
 let curPeer;
@@ -164,10 +166,15 @@ function endCall(peerId) {
   }
 }
 
+socket.on("connect", () => {
+  layoutDefinition = supportLayout();
+});
+
 socket.on("playerData", (data) => {
   console.log(socket.id);
   curP = new Player(data);
   players[socket.id] = curP;
+
   curPeer = new Peer(data.peerID, {
     config: {
       iceServers: [
@@ -230,6 +237,26 @@ function resetProximityStates() {
   Object.values(players).forEach((player) => {
     player.proximityCircle.styleJs({ borderColor: "rgba(0, 255, 0, 0.2)" });
   });
+}
+
+function supportLayout() {
+  let keyboardLayout = prompt("Enter your keyboard layout (blank for qwerty)");
+  let output = {};
+  switch (keyboardLayout) {
+    case "":
+      output.forward = "w";
+      output.backward = "s";
+      output.left = "a";
+      output.right = "d";
+      break;
+    case "w": //workman
+      output.forward = "d";
+      output.backward = "s";
+      output.left = "a";
+      output.right = "h";
+      break;
+  }
+  return output;
 }
 
 socket.on("leave", (data) => {
@@ -306,19 +333,19 @@ function changeNickname() {
 
 function update() {
   let moved = false;
-  if (pressedKeys["w"] || pressedKeys["ArrowUp"]) {
+  if (pressedKeys[layoutDefinition.forward] || pressedKeys["ArrowUp"]) {
     curY = curY - 20;
     moved = true;
   }
-  if (pressedKeys["s"] || pressedKeys["ArrowDown"]) {
+  if (pressedKeys[layoutDefinition.backward] || pressedKeys["ArrowDown"]) {
     curY = curY + 20;
     moved = true;
   }
-  if (pressedKeys["a"] || pressedKeys["ArrowLeft"]) {
+  if (pressedKeys[layoutDefinition.left] || pressedKeys["ArrowLeft"]) {
     curX = curX - 20;
     moved = true;
   }
-  if (pressedKeys["d"] || pressedKeys["ArrowRight"]) {
+  if (pressedKeys[layoutDefinition.right] || pressedKeys["ArrowRight"]) {
     curX = curX + 20;
     moved = true;
   }
