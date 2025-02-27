@@ -1,6 +1,6 @@
 import Html from "../scripts/html.js";
 
-let layoutDefinition = {};
+let layoutDefinition = supportLayout();
 
 class Player {
   constructor(playerData) {
@@ -165,10 +165,6 @@ function endCall(peerId) {
     activeCalls.delete(peerId);
   }
 }
-
-socket.on("connect", () => {
-  layoutDefinition = supportLayout();
-});
 
 socket.on("playerData", (data) => {
   console.log(socket.id);
