@@ -1,10 +1,14 @@
 import Html from "../scripts/html.js";
 
 let layoutDefinition = supportLayout();
+let lastTick = Date.now();
+let lastPingTime = 0;
+let currentPing = 0;
 
 class Player {
   constructor(playerData) {
     console.log(playerData);
+    this.id = playerData.id;
     this.peerID = playerData.peerID;
     this.playerDiv = new Html("div")
       .styleJs({
@@ -101,6 +105,20 @@ sounds.loadSound("../audio/keef.wav", "wonderhoy");
 let socket = io("https://olive.nxw.pw:31338");
 let curPeer;
 let players = {};
+
+// Add ping monitoring
+function sendPing() {
+  lastPingTime = Date.now();
+  socket.emit("ping");
+}
+
+socket.on("pong", () => {
+  currentPing = Date.now() - lastPingTime;
+  console.log(`Current ping: ${currentPing}ms`);
+});
+
+// Start ping monitoring
+setInterval(sendPing, 5000); // Check ping every 5 seconds
 
 let curX = 0;
 let curY = 0;
@@ -225,6 +243,7 @@ socket.on("join", (player) => {
   console.log("new player", player);
   let p = new Player(player.data);
   players[player.id] = p;
+  checkProximity();
   sounds.playSound("wonderhoy");
 });
 
@@ -269,6 +288,14 @@ socket.on("leave", (data) => {
   checkProximity();
 });
 
+socket.on("tick", () => {
+  let now = Date.now();
+  let delta = now - lastTick;
+  let tickSpeed = 1 / (delta / 1000);
+  lastTick = now;
+  console.log("Tick speed", parseInt(tickSpeed));
+});
+
 function checkProximity() {
   const PROXIMITY_RADIUS = 250;
   const currentlyInRange = new Set();
@@ -303,6 +330,8 @@ function checkProximity() {
 }
 
 socket.on("move", (data) => {
+  if (!players[data.id]) return;
+  if (data.id === socket.id) return;
   players[data.id].move(data.x, data.y);
   checkProximity();
 });
